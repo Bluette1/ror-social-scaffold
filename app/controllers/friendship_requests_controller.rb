@@ -15,8 +15,7 @@ class FriendshipRequestsController < ApplicationController
   end
 
   def update
-    @sent_request.status = 'confirmed'
-    if @sent_request.save
+    if @sent_request.confirm_friendship
       flash[:notice] = "You are now friends with #{@user.name}"
     else
       flash[:alert] = "An error occurred while trying to accept the friendship #{@user.errors.full_messages}"
