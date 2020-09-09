@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @logged_in_user = current_user?
     @pending_friend = pending_friend?
     @add_friend = add_friend?
-    flash[:notice] = 'A friendship request was sent and is awaiting confirmation' if pending?
+    flash[:notice] = "A friendship request was sent to #{@user.name} and is awaiting confirmation" if pending?
   end
 end
 

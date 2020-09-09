@@ -31,7 +31,7 @@ RSpec.describe 'Friendship Management Features', type: :feature do
     click_on 'All users'
     click_button 'Add Friend'
 
-    expect(page).to have_content("A friendship request was sent and is awaiting confirmation\nName: #{mary[:name]}\n")
+    expect(page).to have_content("A friendship request was sent to #{mary[:name]} and is awaiting confirmation")
   end
 
   scenario 'a user with a pending friendship request can accept it on the all users\' list' do
