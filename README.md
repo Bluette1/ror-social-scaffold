@@ -1,5 +1,5 @@
 # Scaffold for social media app with Ruby on Rails
-![CI Status Badge](https://github.com/Bluette1/ror-social-scaffold/workflows/CI%20Checks/badge.svg)
+![CI Status Badge](https://github.com/Bluette1/ror-social-scaffold/workflows/Linters/badge.svg)
 > This repo includes intial code for social media app with basic styling. Its purpose is to be a starting point for Microverse students.
 
 ## Built With
@@ -9,7 +9,7 @@
 
 ## Live Demo
 
-TBA
+[Click here](https://post-bk-app.herokuapp.com/)
 
 
 ## Getting Started
