@@ -59,7 +59,7 @@ Open `http://localhost:3000/` in your browser.
 ### Run tests
 
 ```
-    rpsec --format documentation
+    bundle exec rake
 ```
 
 ### How to use the site
