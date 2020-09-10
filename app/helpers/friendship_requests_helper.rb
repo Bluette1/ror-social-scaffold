@@ -21,16 +21,16 @@ module FriendshipRequestsHelper
   end
 
   def check_pending_request(user, action, method)
-    return unless pending_friend?(user)
+    return unless requesting_friend?(user)
 
-    sent_request = Friendship.find_by(friend: user)
+    sent_request = current_user.requesting_friendships.find_by(friend: user)
     button_to action,
               user_friendship_request_path(user.id, sent_request.id),
               method: method, class: 'btn add-friend btn-secondary', type: 'submit'
   end
 
   def logged_in_user
-    @logged_in_user
+    render 'users/pending_friend_requests' if @logged_in_user
   end
 
   def usr

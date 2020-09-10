@@ -5,5 +5,6 @@ class Friendship < ApplicationRecord
 
   def confirm_friendship
     update_attributes(status: 'confirmed')
+    Friendship.create!(friend: inverse_friend, inverse_friend: friend, status: 'confirmed')
   end
 end
