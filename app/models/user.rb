@@ -10,27 +10,40 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  has_many :friendships, foreign_key: :friend_id, class_name: 'Friendship', dependent: :destroy
+  has_many :friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
 
-  has_many :friends, through: :friendships, source: :inverse_friend, dependent: :destroy do
-    def confirmed
-      where('friendships.status = ?', 'confirmed')
-    end
-  end
+  has_many :requested_friendships,
+           -> { where status: 'pending' }, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
+  has_many :requested_friends, through: :requested_friendships, source: :inverse_friend, dependent: :destroy
+
+  has_many :requesting_friendships,
+           -> { where status: 'pending' },
+           class_name: 'Friendship',
+           foreign_key: 'inverse_friend_id',
+           dependent: :destroy
+  has_many :requesting_friends, through: :requesting_friendships, source: :friend, dependent: :destroy
+
+  has_many :confirmed_friendships,
+           -> { where status: 'confirmed' }, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
+  has_many :friends, through: :confirmed_friendships, source: :inverse_friend, dependent: :destroy
 
   def friend?(user)
-    friends.confirmed.include?(user)
+    friends.include?(user)
   end
 
   def pending?(user)
     request_to?(user) || request_from?(user) ? true : false
   end
 
+  def friends_and_own_posts
+    Post.where(user: (friends + [self]))
+  end
+
   def request_to?(user)
-    Friendship.find_by(friend: self, inverse_friend: user, status: 'pending')
+    requested_friends.include?(user)
   end
 
   def request_from?(user)
-    Friendship.find_by(friend: user, inverse_friend: self, status: 'pending')
+    requesting_friends.include?(user)
   end
 end
